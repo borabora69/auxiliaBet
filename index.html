@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auxilia Bet - Seu Guia de Apostas</title>
+    <!-- Bootstrap CSS (para estilização rápida) -->
+    <link href="https://cdn.jsdelivr.net/npm/[email protected]/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <style>
+        body { background-color: #f8f9fa; }
+        .hero-section { background: linear-gradient(135deg, #28a745, #218838); color: white; padding: 4rem 1rem; border-radius: 0 0 2rem 2rem; margin-bottom: 3rem; }
+        .calculator-box { background: white; border-radius: 1rem; padding: 2rem; box-shadow: 0 .5rem 1rem rgba(0,0,0,.15); }
+        .disclaimer { font-size: 0.9rem; color: #6c757d; border-top: 1px solid #dee2e6; margin-top: 2rem; padding-top: 1rem; }
+    </style>
+</head>
+<body>
+
+    <!-- Cabeçalho / Seção Principal -->
+    <div class="hero-section text-center">
+        <div class="container">
+            <h1 class="display-4 fw-bold">🚀 Auxilia Bet</h1>
+            <p class="lead">Seu assistente inteligente para entender apostas esportivas. <strong>Nós não aceitamos apostas</strong>, apenas ajudamos você a analisar.</p>
+        </div>
+    </div>
+
+    <!-- Conteúdo Principal -->
+    <div class="container">
+
+        <!-- Seção da Calculadora (Exemplo) -->
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="calculator-box">
+                    <h3>📈 Simulador de Aposta</h3>
+                    <p class="text-muted">Configure sua simulação abaixo. Esta é uma <u>versão de demonstração</u> com cálculos fixos.</p>
+
+                    <div class="mb-3">
+                        <label for="bankroll" class="form-label">1. Quanto você quer apostar? (R$)</label>
+                        <input type="number" class="form-control" id="bankroll" value="100" min="1">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">2. Qual seu perfil de risco?</label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="riskProfile" id="conservative" checked>
+                            <label class="form-check-label" for="conservative">🛡️ Conservador (Odds baixas, ganho menor)</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="riskProfile" id="aggressive">
+                            <label class="form-check-label" for="aggressive">⚡ Arriscado (Odds altas, ganho potencial maior)</label>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="odd" class="form-label">3. Odd (Cota) do evento</label>
+                        <input type="number" step="0.01" class="form-control" id="odd" value="1.85">
+                    </div>
+
+                    <button class="btn btn-success w-100 mt-2" onclick="calculate()">Calcular Ganho Estimado</button>
+
+                    <!-- Resultado da Simulação -->
+                    <div class="alert alert-info mt-4" id="result" role="alert" style="display:none;">
+                        <h5 class="alert-heading">💡 Resultado da Simulação</h5>
+                        <p id="resultText">Aqui aparecerá o cálculo.</p>
+                        <hr>
+                        <p class="mb-0 small"><strong>Lembre-se:</strong> Este é um valor estimado. Apostas envolvem risco de perda.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Informações Importantes -->
+        <div class="row mt-5">
+            <div class="col-12">
+                <div class="disclaimer text-center">
+                    <p><strong>⚠️ Aviso Legal & Jogo Responsável:</strong> Este site é apenas para fins informativos e educacionais. <strong>Não somos uma casa de apostas</strong> e não processamos apostas. O jogo deve ser feito por maiores de 18 anos. Se você acha que tem um problema com jogos, busque ajuda.</p>
+                    <p>Para apostar, você será redirecionado para sites de operadoras licenciadas.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/[email protected]/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+
+    <script>
+        // Função de cálculo SIMPLES para demonstração (substituir por lógica real com API)
+        function calculate() {
+            const bankroll = parseFloat(document.getElementById('bankroll').value);
+            const odd = parseFloat(document.getElementById('odd').value);
+            const isAggressive = document.getElementById('aggressive').checked;
+
+            // Lógica de exemplo muito simplificada
+            let suggestedBet;
+            if (isAggressive) {
+                suggestedBet = bankroll * 0.3; // Perfil arriscado aposta 30%
+            } else {
+                suggestedBet = bankroll * 0.1; // Perfil conservador aposta 10%
+            }
+
+            const potentialWin = suggestedBet * odd;
+            const profit = potentialWin - suggestedBet;
+
+            const resultText = `Com um perfil <strong>${isAggressive ? 'Arriscado' : 'Conservador'}</strong>, sugerimos apostar <strong>R$ ${suggestedBet.toFixed(2)}</strong> de seus R$ ${bankroll.toFixed(2)}.<br>
+            Se a odd de <strong>${odd}</strong> se concretizar, seu retorno será de <strong>R$ ${potentialWin.toFixed(2)}</strong> (lucro de aproximadamente R$ ${profit.toFixed(2)}).`;
+
+            document.getElementById('resultText').innerHTML = resultText;
+            document.getElementById('result').style.display = 'block';
+        }
+
+        // Inicializa a calculadora ao carregar a página
+        window.onload = function() {
+            calculate();
+        };
+    </script>
+</body>
+</html>
