@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auxilia Bet - Calculadora</title>
+    <link href="https://cdn.jsdelivr.net/npm/[email protected]/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .container { max-width: 600px; margin-top: 50px; }
+        .card { padding: 20px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <h3>💰 Calculadora Auxilia Bet</h3>
+            <p class="text-muted">Insira seu orçamento e perfil para ver sugestões.</p>
+
+            <div class="mb-3">
+                <label class="form-label">Seu Orçamento (R$):</label>
+                <input type="number" class="form-control" id="bankroll" value="100">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Perfil de Risco:</label>
+                <select class="form-select" id="riskProfile">
+                    <option value="low">🛡️ Conservador (Baixo Risco)</option>
+                    <option value="medium">⚖️ Moderado</option>
+                    <option value="high">⚡ Agressivo (Alto Risco)</option>
+                </select>
+            </div>
+            <button class="btn btn-primary w-100" onclick="fetchSuggestions()">Calcular Sugestões</button>
+
+            <hr>
+            <h5>🎯 Sugestões de Aposta</h5>
+            <div id="suggestions">As sugestões aparecerão aqui...</div>
+            <div class="mt-3 text-muted small">
+                <strong>⚠️ Aviso:</strong> Este site é apenas para simulação educacional.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function fetchSuggestions() {
+            const bankroll = document.getElementById('bankroll').value;
+            const profile = document.getElementById('riskProfile').value;
+
+            // ATENÇÃO: Substitua pela URL real do SEU servidor back-end
+            const backendUrl = 'https://SEU-BACKEND.com/api/suggestions';
+
+            try {
+                const response = await fetch(`${backendUrl}?bankroll=${bankroll}&profile=${profile}`);
+                const data = await response.json();
+                displaySuggestions(data);
+            } catch (error) {
+                document.getElementById('suggestions').innerHTML = `<p class='text-danger'>Erro ao buscar dados. Verifique o console.</p>`;
+                console.error("Erro:", error);
+            }
+        }
+
+        function displaySuggestions(data) {
+            let html = '<ul class="list-group">';
+            data.forEach(suggestion => {
+                html += `<li class="list-group-item">
+                    <strong>${suggestion.event}</strong><br>
+                    Aposta: R$ ${suggestion.suggestedBet.toFixed(2)} | Odd: ${suggestion.odd}<br>
+                    <em>Ganho Estimado: R$ ${suggestion.estimatedWin.toFixed(2)}</em>
+                </li>`;
+            });
+            html += '</ul>';
+            document.getElementById('suggestions').innerHTML = html;
+        }
+    </script>
+</body>
+</html>
