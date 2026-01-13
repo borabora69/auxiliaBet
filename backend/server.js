@@ -12,7 +12,7 @@ let lastFetchTime = 0;
 const CACHE_DURATION = 60 * 60 * 1000; // 1 hora em milissegundos
 
 // SUA CHAVE da API de terceiros (NUNCA a coloque no front-end!)
-const THIRD_PARTY_API_KEY = 'SUA_CHAVE_AQUI';
+const THIRD_PARTY_API_KEY = 'AIzaSyD8SlF_2C2PMqWgS5KugGhtg3wxKV37nI4';
 const THIRD_PARTY_API_URL = 'https://api.sportmonks.com/v3/football/odds/pre-match'; // Exemplo
 
 app.get('/api/suggestions', async (req, res) => {
